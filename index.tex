@@ -18,7 +18,7 @@
 
 % encoding and nationalisation
 \usepackage[T1]{fontenc}%recommended encoding, comment out for backward compatibility
-%\usepackage{lmodern} alternative font
+\usepackage{lmodern} %alternative font
 \usepackage[utf8]{inputenc}
 \usepackage[autostyle=true,german=quotes]{csquotes}
 
@@ -138,9 +138,8 @@
   	 \include{\getChapterPath{\arabic{ct}}}%
   }%
 
-  %\input{content/chapter4}
-  %\input{content/chapter5}
-  %...
+  \include{content/chapter4}
+  \include{content/chapter5}
   \include{\chapterPath conclusion}
 
   \ifisPrintMode
