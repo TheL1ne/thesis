@@ -1,25 +1,85 @@
 \chapter{State of the Art}
-\section{Entwicklung von Industriellen Netzwerken}
+\section{Aktueller Trend in industriellen Netzwerken}
 Der Großteil der Netzwerke im industriellen Kontext wird auch heute noch speziell für eine Fertigungsanlage geplant. Der Grund dafür sind spezielle Anforderungen an die Netzwerkhardware um Teilnehmern bestimmte Kommunikationszeiten (sogenannte Slots) und Bandbreiten garantieren zu können. Doch durch das aufkommen von Streamingdiensten in der Unterhaltungselektronik sind die Anforderungen an Stabilität, Verfügbarkeit und gleichzeitiger steigender Mobilität auch im Endkundenbereich gestiegen. Die damit verbundene Qualitätssteigerung in den Netzen und Netzwerkhardware bringt Verbrauchernetzwerktechnologie in den Blickpunkt von Forschungsarbeiten mit dem Ziel diese besser für Echtzeitnahe industrielle Anwendungen nutzen zu können\cite{wollschlaeger2017future}. Das Ziel dabei ist einfach: Geld einsparen. Besonders interessant ist die bewiesene Fehlerarmut der Endkundentechnologien, da sie durch viele Millionen Nutzer intensiveren Tests unterzogen werden, als es Testingenieure in annehmbarer Zeit durchführen könnten.\\
 Deswegen sieht die aktuelle Entwicklung der Industrie vor neuen mobilen Endgeräte wie Smartphones, Tablets oder Laptops als Endpunkte für die Darstellung von internen Daten zu nutzen. Dabei sollen aber auch die bereits vorhanden Geräte der Mitarbeiter genutzt werden\cite{french2014current}. In Kombination mit den dabei steigenden Anzahl an Netzwerkteilnehmern und kabellosen Geräten, sinkt auch die Kontrolle über eben jene. Außerdem werden auch immer mehr kabellose Sensoren und komplexere Subgeräte eingebaut, da eine steigende Komplexität von Bauteilen die Kosten der Herstellung in die Höhe treibt, wird mit flexibleren Nutzungsmöglichkeiten versucht entgegen zu wirken. So entstand ein neues Forschungsfeld: \acrlong{cps}. Dieses Forschungsfeld führt unterschiedlichste Technologien zusammen und ist ein Kernelement der \textit{vierten industriellen Revolution}.\\
-Die vierte industrielle Revolution oder „Industrie 4.0“ wie es auch in vielen Veröffentlichungen genannt wird, konzentriert sich nun auf die massive Ausweitung der Kommunikation zwischen Maschine und Maschine (\Gls{M2M}) und Produkt und Maschine \cite{lasi2014industry}. Die Zukunftsvision sieht dabei vor, dass die Produkte ihren Zustand und die Schritte die noch notwendig sind um sie nach Kundenwunsch fertig zu stellen, kennen. Die notwendigen Ressourcen (wie z.B. Maschinen und Rohstoffe) werden dann durch Prozesssteuerung zugewiesen. Dieses Prozesssteuerung spielt dabei eine so große Rolle, dass sie als kritische Komponente permanent verfügbar sein muss und deswegen mit passenden Vorgaben (wie \textit{\gls{gracefulshutdown}} und \textit{\Gls{rollingupdates}}) in virtuellen Systemen von Cloud-Anbietern ausgerollt wird. Damit erreicht man auf der einen Seite die bessere Planbarkeit der eignenen IT-Kosten und andererseits gibt es damit eine Abstraktionsebene zwischen Serverhardware und eigentlichem Service, der die globale Nutzung einfacher macht\cite{wollschlaeger2017future}. Beide Entwicklungen führen zu einer deutlichen Zunahme der Netzwerkkommunikation in Fertigungsanlagen und setzen ein verlässliches „Wide Area Network“ vorraus.\\
+Die vierte industrielle Revolution oder \textit{\Gls{Industrie40}} wie es auch in vielen Veröffentlichungen genannt wird, konzentriert sich nun auf die massive Ausweitung der Kommunikation zwischen Maschine und Maschine (\Gls{M2M}) und Produkt und Maschine \cite{lasi2014industry}. Die Zukunftsvision sieht dabei vor, dass die Produkte ihren Zustand und die Schritte die noch notwendig sind um sie nach Kundenwunsch fertig zu stellen, kennen. Die notwendigen Ressourcen (wie z.B. Maschinen und Rohstoffe) werden dann durch Prozesssteuerung zugewiesen. Dieses Prozesssteuerung spielt dabei eine so große Rolle, dass sie als kritische Komponente permanent verfügbar sein muss und deswegen mit passenden Vorgaben (wie \textit{\gls{gracefulshutdown}} und \textit{\Gls{rollingupdates}}) in virtuellen Systemen von Cloud-Anbietern ausgerollt wird. Damit erreicht wird auf der einen Seite eine bessere Planbarkeit der eigenen IT-Kosten und andererseits eine stärkere Abstraktion von der Serverhardware erreicht. Das ist erstrebenswert, da es die globale Nutzung Endpunktes einfacher macht\cite{wollschlaeger2017future}. Beide Entwicklungen führen zu einer deutlichen Zunahme der Netzwerkkommunikation in Fertigungsanlagen und setzen ein verlässliches „Wide Area Network“ vorraus.\\
 
-\section{AB HIER NICHT MEHR ÜBERARBEITET}
-TODO
-\section{Anomalieerkennung in industriellen Netzwerken}
-Doch wie stellt man die Verfügbarkeit und Nutzbarkeit des Netzwerks sicher, wenn es nicht mehr vorgesehen ist alle Teilnehmer manuell zu konfigurieren und zu überwachen? Es ist notwendig Überwachungsaufgaben auf Algorithmen auszulagern. Dafür gibt es aktuell zwei unterschiedliche Ansätze. Auf der einen Seite existiert der „phänomenologische Ansatz“ bei dem Werte des Systems (Sensordaten, Energieverbrauch oder/und Netzwerkdaten) als Anomalie klassifiziert werden. Dies wurde häufig mit Hilfe von Clustering-Algorithmen versucht [Zitat]. Dabei können die zu erwarteten Werte häufig mithilfe von ausgiebiger Simulation bereits vor der Inbetriebnahme eine Fertigungsanlage berechnet werden. Die entsprechenden Simulationen für Motoren, Ventile und Sensoren sind in den letzten Jahren durch viele Anwendungen bestätigt worden [Zitat].\\
-Andere Arbeiten haben den Fokus geändert und konzentrieren sich auf die Darstellung des Systems über einen „finite, timed, deterministic Automata“ der sich als ein Set aus einer endlichen Anzahl an Zuständen, Übergängen und Ereignissen darstellen lässt [Zitat]. Dabei wird die Struktur des Automaten in zwei Schritten gewonnen und im dritten folgt dann die Anomalieerkennung [Zitat]. Um folgende Schritte zu vollziehen ist es zwingend Notwendig alle Sensordaten über mehrere Produktionszyklen aufzuzeichnen und in einer Datenbank vorrätig zu halten. Dabei werden die Sensordaten in passende Zeitabschnitte eingeteilt und damit eine diskrete Liste von Ereignissen geschaffen. Die notwendigen Schritte dieses Ansatzes sind:
-\begin{enumerate}
-\item \textbf{Lernen der Netzwerkstruktur:} Im ersten Schritt muss die grundlegende Struktur des Netzwerks entweder von Konfigurationsdaten abgeleitet (zum Beispiel der Nachbarschaftsinformationen in PROFINET-Systemen) oder manuell konfiguriert werden. Dabei ist zu beachten das hier noch manuelle Arbeit notwendig ist, wenn es nicht aus der Konfiguration abgelesen werden kann. Aber selbst wenn die Möglichkeit des automatischen Auslesens besteht, muss für jede Netzwerktechnolgie ein passendes Programm geschrieben werden um die Informationen zu extrahieren, was bei erstmaliger Nutzung ebenfalls manuelle Arbeit erfordert. Das Resultat dieses Schrittes ist ein Netzwerkmesh, wobei ein Knoten nicht Notwendigerweise einen Teilnehmer des Netzwerks symbolisiert, denn gleiche Knoten werden zu einem verschmolzen.
-\item \textbf{Lernen des Verhaltensmodells:}  Basierend auf der zuvor gelernten Netzwerkstruktur und der Ereignisliste für Produktionszyklen, werden Wahrscheinlichkeitsbäume aufgebaut für jeden einzelnen Knoten aufgebaut. Dabei ist zu bemerken, dass Wahrscheinlichkeitsverteilungsfunktionen in Abhängigkeit des relativen Zeitpunkts des Auftreten eines Events genutzt werden um auch mit Unsicherheiten im Modell umgehen zu können.
-\item \textbf{Anomalieerkennung:} Hier wird das Modell mit den gemessenen Sensordaten aus der echten Welt simuliert und bei zu großen Abweichungen zwischen Modell und Messungen wird eine Anomalie gemeldet. Dabei gibt es hier noch zwei Ansätze: entweder können Ergebnisse der realen Welt zur Korrektur des Modells aus Schritt 2 genutzt werden oder das Modell bleibt so erhalten wie es ursprünglich mal angelernt wurde.
-\end{enumerate}
-Mit dieser Art der Anomalieerkennung lassen sich drei Klassen von Fehlern erkennen [Zitat]:
-\begin{itemize}
-\item \textbf{Funktionale Fehler:} Wenn es keinen Pfad gibt der mit dem Eingangsereignis vom aktuellen Zustand in einen führt. Die Ereignisabfolge, welche hierher geführt hat, ist also nicht vorgesehen.
-\item \textbf{Zeitfehler:} ein korrektes Ereignis ist eingegangen, aber es liegt außerhalb des vorgesehenen Zeitfensters für die vorhandenen Übergänge. Das Ereignis war zu früh oder zu spät.
-\item \textbf{Wahrscheinlichkeitsfehler:}  Die Wahrscheinlichkeiten mit der Ereignisse im Realsystem auftreten, weicht zu weit von den Wahrscheinlichkeiten im Modell ab.
-\end{itemize}
-Dieser Ansatz hat ein paar grundlegende Limitierungen, denn wie bereits von den Autoren bei der Evaluierung festgestellt, bedarf es einer Enormen Menge an Messungen im realen System um das gesamte Normalverhalten des Systems abzubilden. Diese Anzahl ist derart hoch, dass es nahezu unmöglich ist diese Anzahl an Lerndaten bereit zu stellen [Zitat]. Dadurch kommt es zu Abweichungen vom Modell, die eine Alarmierung zu Folge haben, obwohl das Realsystem in einem völlig korrekten Rahmen operiert.
+TODO: Lean-Automation -> einarbeiten
+
+\section{Anomalieerkennung in industriellen Netzwerken} 
+TODO: ausformulieren
+- typische Attacken \cite{ahmed2016survey} Bild Seite 23
+- unterschiedliche Ansätze:
+	* Prozessanomalien via deterministischem, finitem Zeitautomaten:
+		+ Set einer endlichen Anzahl an Zuständen, Übergängen und Ereignissen
+		+ Vorab Aufzeichnung der Sensordaten über viele Produktzyklen als Anlerndatenbank.
+		+ Nutzt konkret übermittelte Werte um Vorhersagen über Verschleiß und eventuell baldige Ausfälle zu treffen.
+		+ Nicht Fokus unserer Arbeit.
+	* Phänomenologischer Ansatz: bestimmte Werte/Wertkombinationen des Systems werden als Anomalie eingestuft (Netzwerk-, Sensor- oder Energiedaten) -> Clustering & vorab Simulation
+	* Klassifikationsansätze:
+		+ basiert auf Expertenwissen -> supervised ML -> Klassifikationsmodell
+		+ ein Detektionssystem kann nur Signaturen bekannter Angriffe erkennen
+		+ verletzbar durch unbekannte Angriffsstrategien
+		+ Attacke muss mindestens einmal durchgeführt werden -> Schaden meist bereits entstanden
+		ODER:
+		+ Profil des "normalen Verkehrs" wird gelernt -> alles außerhalb ist eine Anomalie
+		+ kann neue Anomalien erkennen, wenn Unterschied zu normalem Profil groß genug
+		+ unrealistisch ein perfektes Profil bei komplexen Systemen zu lernen -> Falschmeldungen
+		+ außerdem: unrealistisch komplett "sauberen" Datensatz zu finden
+		+ Beispiele:
+			- "Support Vector machine" \cite{noble2006support}
+			- Bayesian Network \cite{kruegel2003bayesian}
+			- Neurale Netzwerke \cite{zhang2001hide}
+			- Regelbasierte Ansätze \cite{yang2013rule}
+			-> häufig wurden mehrere Ansätze kombiniert
+	* Statistische Ansätze:
+		+ TODO: chi-square-test verstehen \cite{ye2001anomaly}
+	* Ansätze basierend auf Informationtheorie:
+		+ TODO
+	* Clustering \cite{ahmed2016survey}:
+		+ häufig verwendet: "k-means" \cite{likas2003global}
+		+ vorverarbeitung der Daten notwenig \cite{munz2007traffic}
+		+ "unsupervised machine learning" -> ungelabelter Datensatz als Lerndaten notwendig -> danach online Detektion möglich mit gelernten Klassifikationen \cite{munz2007traffic}
+		+ Datenpunkte werden anhand von "Features" also Metriken bewertet. Beispiele: start time, duration, participating hosts, ports, the statistics of the connection, connection termination flag, and protocol \cite{munz2007traffic}
+		+ Eintrag in ein virtuelles Koordinatensystem bei dem die Metriken die Koordinatenachsen sind
+		+ Abstandsfunktion dient zur Beurteilung von Anomalien
+		+ Annahme: Datenpunkte von normalem Verhalten gruppieren sich eng zusammen, während Anomalien größeren Abstand von Zentroiden haben -> Klassifizierung als Anomalie, wenn ein Punkt näher an einem Anomaliecluster ist als an einem Normalen. Außerdem: wenn die Distanz zu einem Zentroiden eines normalen Clusters größer als ein vordefinierter Grenzwert ist -> Anomalie
+
 \section{Ontologien und Anomalieerkennung}
-TODO: Definition Ontologie, Beispiele/Arbeiten für Anomalieerkennung auf Basis von Ontologien
+- Open World Assumption -> alles nicht explizit Ausgeschlossene kann existieren
+- unterschiedliche Mächtigkeit der 3 OWL-Klassen, warum OWL-DL genutzt wird (TODO)
+- "Reasoner" Features: \cite{roy2010exploitation}
+	* Konsistenzprüfung, Überprüft auf Widersprüche
+	* Konzeptuelle Erfüllbarkeit, Prüfung ob für eine Klasse Instanzen existieren können
+	* Klassifikation, berechnet die Subklassenrelationen "eine Klasse subsumiert eine Andere"
+	* Typisierung, findet die spezifischste Klasse der ein Individuum angehört
+-> Typisierung für uns wichtig, da dort nicht klassifizierbare Individuen erkennbar werden
+- maritime Anomalien \cite{roy2010exploitation}
+	* Anomalien im Sinne von: Gefahren (z.B. Piraterie), Schiff von Interesse (z.B. vom Radar verschwunden)
+	* Domainwissen wird als Ontologiemodell abgebildet
+	* Ontologie Teil einer statischen A-Priori-Wissensdatenbank
+	* Verschmelzung von A-Priori-Wissen mit situativen Fakten -> Klassifikation von Objekten der Situation via Reasoner -> finden von Anomalien
+	* Pellet genutzt nach Review, kommerzieller & Community-Support (Mailinglist + Archiv)
+	* Batchmodus und kontinuierlicher Modus evaluiert, kontinuierlicher Modus zu langsam -> festes Zeitfenster für Fakten
+- Openlet Features \cite{openlett}:
+	* open-source
+	* OWL-JAVA-API
+	* check consistency of ontologies, compute the classification hierarchy, explain inferences, and answer SPARQL queries -> vollwertiger Reasoner
+	* SPARQL Abfragesprache für Datenbank der Ontologie
+- "Smart Home" Anomalien \cite{pardo2016framework}:
+	* "Multi Agent System" -> "Distributed System"
+	* 4 Anomalietypen:
+		+ Hardware
+		+ Software
+		+ Netzwerk
+		+ Operator
+		+ Kontext -> alles funktioniert, aber Alarmfall (z.B. Rauchmelder schlägt an)
+	* Anomalieerkennung im System
+	* Angreifer auf das Netzwerk nicht betrachtet -> Fokus auf Anomaliemeldungen von "Smart Home"-Komponenten -> Vereinfachung der Kommunikation/des Datenaustauschs und automatischer Beantwortung des Ausnahmezustands -> Developer von "Smart Home"-Knoten können auf ein Anomaliemanagementinterface zugreifen um dem System Anomalien mitzuteilen
+	* explizite Beschreibung der Anomalien, Nachrichten im Netzwerk und Komponenten in jeweils eigener Ontologie
+	* Klassifizierung der Netzwerkteilnehmer:
+		+ Aktuator
+		+ Sensor
+		+ Netzwerkrelais
+		+ Endpunkt ("computing device") -> Tablet / Smartphone / PC
+	* unterscheidet Anomalien nach Kritizität, sichtbaren Auswirkungen, Gründen, Ort des Auftauchens und Beständigkeit (transient, periodisch, dauerhaft)
