@@ -1,5 +1,30 @@
 \chapter{Realisierung}
 \section{Versuchsaufbau}
-Grundlegendes Setup das Realisiert werden soll mit Erwähnung der Techniken/Programmiersprachen/Platform(en)
+- Ontologie bildet Soll-Zustand ab. üblich für Anomalieerkennungsverfahren \cite{ye2001anomaly}
+- Überwachungsclient:
+	* Openletals Reasoner
+	* OWL-Java-API
+	* Java
+	* JVM auf Windows10-System (Versionen angeben)
+- Knoten:
+	* Golang in Docker
+	* Typ A (Sensor): periodisches Senden, keine Empfangsoptionen, einfache Bestätigung, gleichbleibende Paketgröße
+	* Typ B (Aktor): un-/periodisches Empfangen + Bestätigung, gleichbleibende Paketgröße
+	* Typ C (Steuerung):
+		+ Empfängt von 1+ Typ A
+		+ Sendet an 0+ Typ B
+		+ Sendet an 1 Typ D
+	* Typ D (Datenbank):
+		+ empfängt nach Bestätigungen gegenüber Typ C passende Meldungen der Vorgänge
+		+ kann nach Werten angefragt werden, für Simulation: nur letzter Wert von Typ A / B mit Zeitstempel,  Knotenidentifikation und Wert -> Response weitergereicht
+- simulierbare Fehler:
+	* ausbleibender regelmäßiger Verkehr -> Sleep in Typ A
+	* ausgebliebene Bestätigungen (jeweils) -> Nil-Pointer ohne Fehler
+	* verspätete Antwort: signifikant mehr als üblich (50%< extra Zeit)
+	* variable Paketgröße: fehlende Einträge([teilweise] leer Instanziierte Responses)
+	* unpassender Zugriff: Anfrage an Gerät ohne Notwendigkeit aus A-Priori-Design
+	* Spontaner Nachrichtensturm: unpassend viele Anfragen an Geräte im Netzwerk -> Get-Requests zu Typ A/B/D
 \section{Limitierungen}
-Aufgetretene Probleme \& evtl. Lösungen/Workarounds
+- Relationen sagen nur etwas über den Typ des Individuums aus mit dem eine Instanz verbunden ist. Nicht über die Instanz selber. -> Klassifizierungslücken möglich, ohne Widersprüche zu erzeugen; TODO: Zitat von Ontologie-Tutorial
+- Aufgrund der Performance-Evaluation vorangegangener Arbeiten wahrscheinlich zu langsam für Echtzeit \cite{roy2010exploitation}
+- aufgrund der starken Typisierung von Golang: nur kleinere Pakete als Variabilität der Paketgröße simulierbar
