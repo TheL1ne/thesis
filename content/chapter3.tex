@@ -6,16 +6,34 @@ Die vierte industrielle Revolution oder \textit{\Gls{Industrie40}} wie es auch i
 
 TODO: Lean-Automation -> einarbeiten
 
-\section{Anomalieerkennung in industriellen Netzwerken} 
-TODO: ausformulieren
-- typische Attacken \cite{ahmed2016survey} Bild Seite 23
+\section{Anomalieerkennung in industriellen Netzwerken}
+Der Begriff der Anomalie ist im Zusammenhang mit industriellen Netzwerken sehr breit angelegt und die Erkennung einer Anomalie kann deswegen auch auf unterschiedliche Arten angegangen werden. Im Allgemeinen ist eine Anomalie einfach eine Abweichung vom Normal- oder Sollzustand und kann sich je nach Betrachtungsebene unterschiedlich manifestieren. Daher unterscheiden \citet{ahmed2016survey} zwischen drei allgemeinen Klassen von Anomalien:
+\begin{itemize}
+\item \textit{Punktanomalie} ist vorhanden, wenn eine einzelne Datenquelle sich vom üblichen Muster des Datensatzes unterscheidet.
+\item Wohingegen eine \textit{Kontextanomalie} sich darin äußert, dass eine Datenquelle sich nur unter bestimmten Bedingungen, also in einem bestimmten Kontext, von üblichen Muster unterscheiden.
+\item \textit{Kollektivanomalie} bezeichnet schließlich eine Abweichung vieler ähnlicher Datenquellen vom üblichen Muster.
+\end{itemize}
+Neben der Art einer Anomalie können die Ergebnisse von Erkennungslagorithmen auf zwei Arten vorliegen: \textit{Scores} und \textit{Labels}. \textit{Scores} oder auch Bewertungen geben an, wie wahrscheinlich ein Zustand von einem Wünschenswerten abweicht. Wir erhalten als Ergebnisse also Werte im Bereich zwischen 0 und 1. Dem gegenüber stehen die \textit{Labels}, die eine binäre Aussage treffen, ob eine Anomalie vorhanden ist. Dabei kann ein \textit{Score} zu einem \textit{Label} werden, wenn ein Schwellwert definiert wird bei dem davon ausgegangen wird, dass eine Anomalie vorhanden ist. \cite[p. ~22]{ahmed2016survey}\\
+Die Berechnung dieser Werte wurde in den letzten Dekaden intensiv untersucht und so haben sich unterschiedliche Klassen von Ansätzen herausgebildet:
+\TODO
+\begin{itemize}
+\item \textit{Klassifikationsbasierte Ansätze} 
+\item \textit{Statistische Ansätze} chi-square-test verstehen \cite{ye2001anomaly}
+\item \textit{Informationstheoretische Ansätze}
+\item Bei den \textit{Clusterbasierte Ansätze} wie \textit{k-Means}\cite{likas2003global} werden Messwerte bezüglich eines passend gewähltem Koordinatensystem eingetragen. Danach können die einzelnen Punkte zu Gruppen zusammengefasst werden und je nach Dichte und Ausdehnung als Anomalien oder reguläres Verhalten eingestuft werden. Diesem Ansatz liegt die Annahme zu Grunde, dass normales Verhalten häufig vorkommt und die zugehörigen Messwerte eng bei einander liegen. In vielen Fällen ist dafür eine Vorverarbeitung der Messungen notwendig \cite{munz2007traffic}. Dafür ist es möglich ein Modell zur Klassifikation von einem Datensatz ohne Markierung der Messpunkte (ob Anomalie oder nicht) zu erhalten. Man spricht dabei von \textit{Unsupervised Machine Learning}\cite{munz2007traffic}.
+\end{itemize}
+
+
+Andere Arbeiten verfolgen da ein gänzlich anderes Bild und gehen von einer funktionierenden Anlage aus, die durch Eingriffe gestört wird oder zukünftig gestört werden soll. Deswegen definiert \textit{Ahmed et. al} \cite{ahmed2016survey} vier Angriffsszenarien die zu Netzwerkanomalien führen können:
+TODO:Bild Seite 23
+\begin{enumerate}
+\item \textit{Denial of Service (DoS)}:
+\item \textit{Probing}:
+\item \textit{User to Roots}:
+\item \textit{Remote to User}:
+\end{enumerate}
+
 - unterschiedliche Ansätze:
-	* Prozessanomalien via deterministischem, finitem Zeitautomaten:
-		+ Set einer endlichen Anzahl an Zuständen, Übergängen und Ereignissen
-		+ Vorab Aufzeichnung der Sensordaten über viele Produktzyklen als Anlerndatenbank.
-		+ Nutzt konkret übermittelte Werte um Vorhersagen über Verschleiß und eventuell baldige Ausfälle zu treffen.
-		+ Nicht Fokus unserer Arbeit.
-	* Phänomenologischer Ansatz: bestimmte Werte/Wertkombinationen des Systems werden als Anomalie eingestuft (Netzwerk-, Sensor- oder Energiedaten) -> Clustering & vorab Simulation
 	* Klassifikationsansätze:
 		+ basiert auf Expertenwissen -> supervised ML -> Klassifikationsmodell
 		+ ein Detektionssystem kann nur Signaturen bekannter Angriffe erkennen
@@ -32,18 +50,6 @@ TODO: ausformulieren
 			- Neurale Netzwerke \cite{zhang2001hide}
 			- Regelbasierte Ansätze \cite{yang2013rule}
 			-> häufig wurden mehrere Ansätze kombiniert
-	* Statistische Ansätze:
-		+ TODO: chi-square-test verstehen \cite{ye2001anomaly}
-	* Ansätze basierend auf Informationtheorie:
-		+ TODO
-	* Clustering \cite{ahmed2016survey}:
-		+ häufig verwendet: "k-means" \cite{likas2003global}
-		+ vorverarbeitung der Daten notwenig \cite{munz2007traffic}
-		+ "unsupervised machine learning" -> ungelabelter Datensatz als Lerndaten notwendig -> danach online Detektion möglich mit gelernten Klassifikationen \cite{munz2007traffic}
-		+ Datenpunkte werden anhand von "Features" also Metriken bewertet. Beispiele: start time, duration, participating hosts, ports, the statistics of the connection, connection termination flag, and protocol \cite{munz2007traffic}
-		+ Eintrag in ein virtuelles Koordinatensystem bei dem die Metriken die Koordinatenachsen sind
-		+ Abstandsfunktion dient zur Beurteilung von Anomalien
-		+ Annahme: Datenpunkte von normalem Verhalten gruppieren sich eng zusammen, während Anomalien größeren Abstand von Zentroiden haben -> Klassifizierung als Anomalie, wenn ein Punkt näher an einem Anomaliecluster ist als an einem Normalen. Außerdem: wenn die Distanz zu einem Zentroiden eines normalen Clusters größer als ein vordefinierter Grenzwert ist -> Anomalie
 
 \section{Ontologien und Anomalieerkennung}
 - Open World Assumption -> alles nicht explizit Ausgeschlossene kann existieren
