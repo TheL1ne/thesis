@@ -7,49 +7,32 @@ Die vierte industrielle Revolution oder \textit{\Gls{Industrie40}} wie es auch i
 TODO: Lean-Automation -> einarbeiten
 
 \section{Anomalieerkennung in industriellen Netzwerken}
+\subsection{Grundlagen}
 Der Begriff der Anomalie ist im Zusammenhang mit industriellen Netzwerken sehr breit angelegt und die Erkennung einer Anomalie kann deswegen auch auf unterschiedliche Arten angegangen werden. Im Allgemeinen ist eine Anomalie einfach eine Abweichung vom Normal- oder Sollzustand und kann sich je nach Betrachtungsebene unterschiedlich manifestieren. Daher unterscheiden \citet{ahmed2016survey} zwischen drei allgemeinen Klassen von Anomalien:
 \begin{itemize}
 \item \textit{Punktanomalie} ist vorhanden, wenn eine einzelne Datenquelle sich vom üblichen Muster des Datensatzes unterscheidet.
 \item Wohingegen eine \textit{Kontextanomalie} sich darin äußert, dass eine Datenquelle sich nur unter bestimmten Bedingungen, also in einem bestimmten Kontext, von üblichen Muster unterscheiden.
 \item \textit{Kollektivanomalie} bezeichnet schließlich eine Abweichung vieler ähnlicher Datenquellen vom üblichen Muster.
 \end{itemize}
-Neben der Art einer Anomalie können die Ergebnisse von Erkennungslagorithmen auf zwei Arten vorliegen: \textit{Scores} und \textit{Labels}. \textit{Scores} oder auch Bewertungen geben an, wie wahrscheinlich ein Zustand von einem Wünschenswerten abweicht. Wir erhalten als Ergebnisse also Werte im Bereich zwischen 0 und 1. Dem gegenüber stehen die \textit{Labels}, die eine binäre Aussage treffen, ob eine Anomalie vorhanden ist. Dabei kann ein \textit{Score} zu einem \textit{Label} werden, wenn ein Schwellwert definiert wird bei dem davon ausgegangen wird, dass eine Anomalie vorhanden ist. \cite[p. ~22]{ahmed2016survey}\\
-Die Berechnung dieser Werte wurde in den letzten Dekaden intensiv untersucht und so haben sich unterschiedliche Klassen von Ansätzen herausgebildet:
-\TODO
-\begin{itemize}
-\item \textit{Klassifikationsbasierte Ansätze} 
-\item \textit{Statistische Ansätze} chi-square-test verstehen \cite{ye2001anomaly}
-\item \textit{Informationstheoretische Ansätze}
-\item Bei den \textit{Clusterbasierte Ansätze} wie \textit{k-Means}\cite{likas2003global} werden Messwerte bezüglich eines passend gewähltem Koordinatensystem eingetragen. Danach können die einzelnen Punkte zu Gruppen zusammengefasst werden und je nach Dichte und Ausdehnung als Anomalien oder reguläres Verhalten eingestuft werden. Diesem Ansatz liegt die Annahme zu Grunde, dass normales Verhalten häufig vorkommt und die zugehörigen Messwerte eng bei einander liegen. In vielen Fällen ist dafür eine Vorverarbeitung der Messungen notwendig \cite{munz2007traffic}. Dafür ist es möglich ein Modell zur Klassifikation von einem Datensatz ohne Markierung der Messpunkte (ob Anomalie oder nicht) zu erhalten. Man spricht dabei von \textit{Unsupervised Machine Learning}\cite{munz2007traffic}.
-\end{itemize}
-
-
-Andere Arbeiten verfolgen da ein gänzlich anderes Bild und gehen von einer funktionierenden Anlage aus, die durch Eingriffe gestört wird oder zukünftig gestört werden soll. Deswegen definiert \textit{Ahmed et. al} \cite{ahmed2016survey} vier Angriffsszenarien die zu Netzwerkanomalien führen können:
-TODO:Bild Seite 23
+Neben der Art einer Anomalie können die Ergebnisse von Erkennungslagorithmen auf zwei Arten vorliegen: \textit{\Glspl{score}} und \textit{\Glspl{label}}. \textit{\Gls{score}} oder auch Bewertungen geben an, wie wahrscheinlich ein Zustand von einem Wünschenswerten abweicht. Wir erhalten als Ergebnisse üblicherweise Werte im Bereich zwischen 0 und 1. Dem gegenüber stehen die \textit{\Glspl{label}}, die eine binäre Aussage treffen, ob eine Anomalie vorhanden ist. Dabei kann ein \textit{\Gls{score}} zu einem \textit{\Gls{label}} werden, wenn ein Schwellwert definiert wird bei dem davon ausgegangen wird, dass eine Anomalie vorhanden ist. \cite[p. ~22]{ahmed2016survey}\\
+Ein der Ursachen einer Anomalie kann das Eindringen eines nicht autorisierten Nutzers zu internen Netzwerkressourcen sein. Deswegen definiert \citet{ahmed2016survey} vier Angriffsszenarien die zu Netzwerkanomalien führen können:
 \begin{enumerate}
-\item \textit{Denial of Service (DoS)}:
-\item \textit{Probing}:
-\item \textit{User to Roots}:
-\item \textit{Remote to User}:
+\item Bei \textit{Denial of Service (DoS)} werden Netzwerkdienste mit einer plötzlichen Hohen Anzahl von Anfragen geflutet, wodurch Server überlastet werden und reguläre Nutzeranfragen nicht mehr beantwortet werden können.
+\item \textit{Probing} dient dazu Informationen zu sammeln. Dabei haben es Angreifer auf Details zu installierter Software und genutzter Infrastruktur (wie Anzahl und Typ der eingesetzten Maschinen). Es ist in vielen Fällen der erste Schritt für folgende Angriffe.
+\item \textit{User to Roots} bezeichnet einen Angriff bei dem ein Nutzer versucht seine Rechte auf Ressourcen auszudehnen auf die er keinen Zugriff haben darf. Dies kann durch das ausspähen von Passwörtern von Admin-Konten oder ausnutzen von Systemverwundbarkeiten passieren.
+\item \textit{Remote to User}: hier handelt es sich um den Versuch eine bestimmte Instanz des Zielnetzwerks zu übernehmen um über diese dann weitere Netzwerkpakete einschleusen zu können.
 \end{enumerate}
+TODO:Bild Seite 23
 
-- unterschiedliche Ansätze:
-	* Klassifikationsansätze:
-		+ basiert auf Expertenwissen -> supervised ML -> Klassifikationsmodell
-		+ ein Detektionssystem kann nur Signaturen bekannter Angriffe erkennen
-		+ verletzbar durch unbekannte Angriffsstrategien
-		+ Attacke muss mindestens einmal durchgeführt werden -> Schaden meist bereits entstanden
-		ODER:
-		+ Profil des "normalen Verkehrs" wird gelernt -> alles außerhalb ist eine Anomalie
-		+ kann neue Anomalien erkennen, wenn Unterschied zu normalem Profil groß genug
-		+ unrealistisch ein perfektes Profil bei komplexen Systemen zu lernen -> Falschmeldungen
-		+ außerdem: unrealistisch komplett "sauberen" Datensatz zu finden
-		+ Beispiele:
-			- "Support Vector machine" \cite{noble2006support}
-			- Bayesian Network \cite{kruegel2003bayesian}
-			- Neurale Netzwerke \cite{zhang2001hide}
-			- Regelbasierte Ansätze \cite{yang2013rule}
-			-> häufig wurden mehrere Ansätze kombiniert
+\subsection{Erkennungsalgorithmen}
+Die Berechnung dieser Werte wurde in den letzten Dekaden intensiv untersucht und so haben sich unterschiedliche Klassen von Ansätzen herausgebildet\cite{ahmed2016survey}:
+\begin{itemize}
+\item \textit{Statistische Ansätze} basieren ebenfalls auf einem Normal-Profil des Systems in Form der Wahrscheinlichkeitsverteilung für zukünftige Ereignisse basierend auf den bereits bearbeiteten  Ereignissen vorhanden ist. Dabei nutzen \citet{ye2001anomaly} die \textit{Chi-Square-Formel} zur Berechnung der Abweichung eines Ereignises von der erwarteten Abfolge. Damit ist es auch möglich seltene Punktanomalien in massiven Datensätzen aufzuspüren.
+\item \textit{Informationstheoretische Ansätze} basieren auf Kenngrößten der Informationtheorie wie \textit{(relativer und/oder bedingter) Entropie} und Informationsgewinn eines Datensatzes. Dabei ist es notwendig Trainingsdaten bereit zu stellen um die Kenngrößen für den vorliegenden Fall bestimmen zu können. \cite{noble2003graph}
+\item Bei den \textit{Clusterbasierte Ansätze} wie \textit{k-Means}\cite{likas2003global} werden Messwerte bezüglich eines passend gewähltem Koordinatensystem eingetragen. Danach können die einzelnen Punkte zu Gruppen zusammengefasst werden und je nach Dichte und Ausdehnung als Anomalien oder reguläres Verhalten eingestuft werden. Diesem Ansatz liegt die Annahme zu Grunde, dass normales Verhalten häufig vorkommt und die zugehörigen Messwerte eng bei einander liegen. In vielen Fällen ist dafür eine Vorverarbeitung der Messungen notwendig \cite{munz2007traffic}. Dafür ist es möglich ein Modell zur Klassifikation von einem Datensatz ohne Markierung der Messpunkte (ob Anomalie oder nicht) zu erhalten. Man spricht dabei von \textit{Unsupervised Machine Learning}\cite{munz2007traffic}.
+\item \textit{Klassifikationsbasierte Ansätze} konzentrieren sich vor allem auf die Detektierung von Netzwerkattacken und basieren dabei entweder auf \Glspl{signatur} oder einem Profil des normalen Netzwerkverkehrs. Diese\Glspl{signatur} werden dabei durch Experten festgelegt und dem System bekannt gemacht. Dadurch können diese Ansätze nur bekannte Attacken detektieren und sind anfällig für neue oder individuell zugeschnittene Angriffe. Bei den profilbasierten Klassifikationen muss ein Profil entweder erst gelernt oder hinterlegt werden. Es wird dann davon ausgegangen, dass sämtliche Anfragen außerhalbs des vorhandenen Profils eine Anomalie darstellt. Da es allerdings unrealistisch ist ein erschöpfendes Profil der erlaubten Anfragen zu hinterlegen, kann dieser Ansatz zu \Glspl{falsepositive} führen. 
+\end{itemize}
+Diese Ansätze sind nicht völlig voneinander trennbar, denn häufig werden Verfahren wie \textit{Clustering} auch außerhalb der \textit{Clusterbasierten Ansätze} genutzt. So verwendet \citet{eskin2002geometric} Clusteralgorithmen zur Detektion von Ausreißern nachdem die Daten auf wichtige Merkmale untersucht und in einem virtuellen Koordinatensystem aus Merkmalvektoren aufgeteilt wurden. Außerdem lassen sich die oben genannten Klassen der Ansätze noch weiter unterteilen. Beispielweise fallen die folgenden Technologien unter die \textit{Klassifikationsbasierten Ansätze}: \textit{Support Vector machine} \cite{noble2006support}, \textit{Bayesian Network} \cite{kruegel2003bayesian}, \textit{Neurale Netzwerke} \cite{zhang2001hide}, Regelbasierte Ansätze \cite{yang2013rule}.
 
 \section{Ontologien und Anomalieerkennung}
 - Open World Assumption -> alles nicht explizit Ausgeschlossene kann existieren
