@@ -1,30 +1,22 @@
 \chapter{Realisierung}
 \section{Versuchsaufbau}
-- Ontologie bildet Soll-Zustand ab. üblich für Anomalieerkennungsverfahren \cite{ye2001anomaly}
-- Überwachungsclient:
-	* Openlet als Reasoner
-	* OWL-Java-API
-	* Java
-	* JVM auf Windows10-System (Versionen angeben)
-- Knoten:
-	* Golang in Docker
-	* Typ A (Sensor): periodisches Senden, keine Empfangsoptionen, einfache Bestätigung, gleichbleibende Paketgröße
-	* Typ B (Aktor): un-/periodisches Empfangen + Bestätigung, gleichbleibende Paketgröße
-	* Typ C (Steuerung):
-		+ Empfängt von 1+ Typ A
-		+ Sendet an 0+ Typ B
-		+ Sendet an 1 Typ D
-	* Typ D (Datenbank):
-		+ empfängt nach Bestätigungen gegenüber Typ C passende Meldungen der Vorgänge
-		+ kann nach Werten angefragt werden, für Simulation: nur letzter Wert von Typ A / B mit Zeitstempel,  Knotenidentifikation und Wert -> Response weitergereicht
-- simulierbare Fehler:
-	* ausbleibender regelmäßiger Verkehr -> Sleep in Typ A
-	* ausgebliebene Bestätigungen (jeweils) -> Nil-Pointer ohne Fehler
-	* verspätete Antwort: signifikant mehr als üblich (50%< extra Zeit)
-	* variable Paketgröße: fehlende Einträge([teilweise] leer Instanziierte Responses)
-	* unpassender Zugriff: Anfrage an Gerät ohne Notwendigkeit aus A-Priori-Design
-	* Spontaner Nachrichtensturm: unpassend viele Anfragen an Geräte im Netzwerk -> Get-Requests zu Typ A/B/D
+Für den Beweis, dass eine Erkennung von Netzwerkanomalien möglich ist, haben wir den Soll-Zustand in einer minimale Ontologie definiert. Diese dient wie bei anderen Anomalieerkennungsverfahren das Normalprofil des System\cite{ye2001anomaly}. Das Profil definiert die Bedingung, dass jeder Netzwerkknoten exakt einem der folgenden vier Klassen angehören muss:
+\begin{enumerate}
+\item\textbf{Typ A} dient als Abstraktion von Sensordaten. Knoten vom Typ A senden periodisch an Typ C. Sie besitzen also eine \textit{sendet-an}-Relation zu Typ C. Es werden keine Daten an Typ A gesendet außer Bestätigungen der erhaltenen Pakete.
+\item\textbf{Typ B} ist eine Abstraktion einer Senke also eines Stellventils oder Motors. Dieser Knoten reagiert nur auf Anweisungen eines Knoten vom Typ C und bestätigt diese nach Ausführung. Typ B besitzt also in manchen Zeitslots eine \textit{empfängt-von}-Relation zu Typ C.
+\item\textbf{Typ C} verkörpert in diesem Modell die Abstraktion von Middleware. Es kann sich hier in der Realität beispielsweise um einen Steuerungsknoten handeln. Dabei führt in unserem Beispiel jede zehnte Messung zu einem Sendevorgang zu Typ B. Daraus folgt, dass Typ C eine \textit{empfängt-von}-Relation zu Typ A und in manchen Zeitslots eine \textit{sendet-an}-Relation zu Typ B hat.
+\item\textbf{Typ D} dient nur der Vollständigkeit und ist in realen Anwendungen optional. Es handelt sich hier um einen Datenbankknoten, der von jedem der anderen Knoten die jeweils empfangenen Daten protokolliert. Dies ist notwendig, damit wir später auswerten können ob von uns ausgelöste Anomalien auch erkannt wurden.
+\end{enumerate}
+Die Knoten wurden als \Gls{mockup} in \textit{Golang}\cite{golang} realisiert. Als Verbindungstechnologien wurde ein übliches \textit{Remote-Procedure-Call}-Framework\cite{grpc} in Kombination mit einer einem Serialisierungsframework\cite{protobuf} genutzt. Die jeweiligen Knoten liefen dabei in einer Dockerumgebung\cite{docker} um die Komponenten so weit wie möglich von einander unabhängig auf einer Maschinen laufen zu lassen. Für die Anomalieerkennung kam neben der genannten Ontologie basierend auf \textit{OWL2}\cite{owl2} die \textit{OWL-Java-API}\cite{owlapi} zum Einsatz. Aufgrund der Limitierung der API auf Java, wurde der ganze Anomalieerkennungsalgorithmus in Java umgesetzt. Der zugrunde liegende Rechner wurde mit Windows 10 betrieben und zum Einsatz kam Java version \verb|1.8.0\_281|.\\
+Die API wurde benutzt um Situationsdaten zur Wissensdatenbank der Ontologie hinzuzufügen. Da bereits andere Evaluationen die Schlussfolgerung zogen, dass der Batchmode vorzuziehen ist, wurden die Daten immer für kurze Zeitintervalle (TODO: wie lang) aufgezeichnet und anhand der vorhandenen Daten, die Knoten und deren Beziehungen definiert. Nach der vollständigen Auswertung der Daten für den Zeitsraum wurde ein OWL-kompatibler \Gls{reasoner} zur Klassifikation genutzt. Hier kam \textit{Openlett}\cite{openlett} zum Einsatz. Dabei handelt es sich um eine Weiterentwicklung von \textit{Pellet}\cite{pellet} durch eine Open-Source-Community.\\
+In unserem Versuchsaufbau existiert von jedem Knotentyp genau eine Instanz und jeder Knoten außer Typ D wurde erweitert ein gewünschtes, annomales Verhalten für kurze Zeit zeigen zu können. Dadurch sind folgende Anomalien simulierbar:
+\begin{enumerate}
+\item ausbleibende Pakete (sowohl als Empfangsbestätigung als auch beim Senden)
+\item deutlich verspätete Pakete
+\item spontaner Nachrichtensturm (sogenanntes \textit{Flooding})
+\end{enumerate}
+Wir gehen davon aus, dass eine Anomalie vorhanden ist, wenn es zu Widersprüchen in den gefunden Instanzen und der definierten Ontologie kommt. Außerdem betrachten wir die einzelnen Zustände in den Zeitslots nicht unabhängig von einander, sondern vergleichen die jeweiligen Klassifikationen miteinander. Das dient dem Erkennen von Anomalien, die sich über einen kompletten Slot erstrecken und damit nur zu einer anderen Klassifizierung 
+
 \section{Limitierungen}
-- Relationen sagen nur etwas über den Typ des Individuums aus mit dem eine Instanz verbunden ist. Nicht über die Instanz selber. -> Klassifizierungslücken möglich, ohne Widersprüche zu erzeugen; TODO: Zitat von Ontologie-Tutorial
-- Aufgrund der Performance-Evaluation vorangegangener Arbeiten wahrscheinlich zu langsam für Echtzeit \cite{roy2010exploitation}
-- aufgrund der starken Typisierung von Golang: nur kleinere Pakete als Variabilität der Paketgröße simulierbar
+Aufgrund der Geschwindigkeitsevalution von \textit[p.~5]{Roy et al.}\cite{roy2010exploitation} liegt es Nahe, dass bei zu komplexen Ontologiemodellen oder bei zu Individuen pro Slot, die benötigte Zeit bis zur fertigen Klassifizierung stark ansteigt. Insbesondere bei starker Nutzung von \textbf{ODER}-Verknüpfungen.\\
+Durch die angewandten Technologien zur Umsetzung des \Gls{mockup}s ist es nicht möglich eine größere Abweichung der Paketgröße zu simulieren. So konnten an die definierten Pakete nicht einfach weitere Bytes angehängt werden um eventuelle Rechteausweitung zu simulieren. Diese Art der Anomalieerkennung muss in zukünftigen Arbeiten durchgeführt werden.
